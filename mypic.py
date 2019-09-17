@@ -29,6 +29,8 @@ brushColor('#552200')
 penColor('#552200')
 rectangle(50, 500, 300, 160)
 
+polygon(([]))
+
 #Sky
 ##moon
 brushColor('#EEEEEE')
