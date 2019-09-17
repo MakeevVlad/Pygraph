@@ -33,6 +33,19 @@ brushColor('#552200')
 penColor('#552200')
 rectangle(50, 500, 300, 160)
 
+brushColor('#554433')
+penColor('#554433')
+for i in range(4):
+    rectangle(60 + i*65, 300, 90+ i*65, 160)
+
+brushColor('#554433')
+penColor('#554433')
+for i in range(2):
+    rectangle(70 + i*85, 450, 110+ i*85, 400)
+
+brushColor('#FFCC33')
+penColor('#FFCC33')
+rectangle(70 + 2*85, 450, 110+ 2*85, 400)
 
 
 
