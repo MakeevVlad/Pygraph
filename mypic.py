@@ -33,19 +33,25 @@ brushColor('#552200')
 penColor('#552200')
 rectangle(50, 500, 300, 160)
 
+#Top windws
 brushColor('#554433')
 penColor('#554433')
 for i in range(4):
     rectangle(60 + i*65, 300, 90+ i*65, 160)
 
+##Bottom windws
 brushColor('#554433')
 penColor('#554433')
 for i in range(2):
     rectangle(70 + i*85, 450, 110+ i*85, 400)
-
 brushColor('#FFCC33')
 penColor('#FFCC33')
 rectangle(70 + 2*85, 450, 110+ 2*85, 400)
+
+#Balcony
+brushColor('#110000')
+penColor('#110000')
+rectangle(25, 315, 320, 300)
 
 
 
@@ -68,8 +74,5 @@ ellipsis(20000, 500, 510, 60)
 brushColor('#333333')
 penColor('#333333')
 ellipsis(30000, 400, 700, 120)
-
-
-
 
 run()
