@@ -25,13 +25,17 @@ penColor('#000000')
 rectangle(0, 700, 700, 250)
 
 #hounted house
+brushColor('#000000')
+penColor('#000000')
+polygon([[25, 160], [75, 130], [275, 130],[325, 160]])
+
 brushColor('#552200')
 penColor('#552200')
 rectangle(50, 500, 300, 160)
 
-brushColor('#000000')
-penColor('#000000')
-polygon([[25, 160], [75, 130], [275, 130],[325, 160]])
+
+
+
 
 #Sky
 ##moon
