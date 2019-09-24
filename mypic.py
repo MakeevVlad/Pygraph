@@ -9,32 +9,47 @@ def ellipsis(a, b, x0, y0):
     for x in np.arange(np.sqrt(a) + x0, -np.sqrt(a) + x0, -1):
         p.append([x, -np.sqrt(b*(1-(x-x0)**2/a))+y0])
     polygon(p)
+pol = []
+global p
+for i in range(5):
+    pol.append(polygon([[0, 0]]))
 
 def ghost():
+    '''
     brushColor('#000000')
     penColor('#000000')
     rectangle(400, 600, 700, 400)
+    '''
     brushColor('#E5E5E5')
     penColor('#E5E5E5')
     ellipsis(625, 625, 550, 400)
-    p = ([])
-    p.append([550-25  , 400])
-    p.append([550-25*3+rm.uniform(-5, 6), 400+25*3+rm.uniform(-5, 6)])
-    p.append([550-25*4+rm.uniform(-5, 6), 400+25*7+rm.uniform(-5, 6)])
-    p.append([500-25*2+rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
-    p.append([550-25*1+rm.uniform(-5, 6), 400+25*7+rm.uniform(-5, 6)])
-    p.append([550     +rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
-    p.append([550-25*1+rm.uniform(-5, 6), 400+25*8+rm.uniform(-5, 6)])
-    p.append([550+25  +rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
-    p.append([550+25*2+rm.uniform(-5, 6), 400+25*7+rm.uniform(-5, 6)])
-    p.append([550+25*2+rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
-    p.append([550+25*3+rm.uniform(-5, 6), 400+25*7+rm.uniform(-5, 6)])
-    p.append([550+25*4+rm.uniform(-5, 6), 400+25*5+rm.uniform(-5, 6)])
-    p.append([550+25*5+rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
-    p.append([550+25*4+rm.uniform(-5, 6), 400+25*4+rm.uniform(-5, 6)])
-    p.append([550+25*3+rm.uniform(-5, 6), 400+25*3+rm.uniform(-5, 6)])
-    p.append([550+25, 400])
-    polygon(p)
+    p = [([])]
+    for i in range(5):
+        p.append(([]))
+        deleteObject(pol[i])
+        p[i].append([550-25  , 400])
+        p[i].append([550-25*3+rm.uniform(-5, 6), 400+25*3+rm.uniform(-5, 6)])
+        p[i].append([550-25*4+rm.uniform(-5, 6), 400+25*5+rm.uniform(-5, 6)])
+        p[i].append([550-25*3+rm.uniform(-5, 6), 400+25*4+rm.uniform(-5, 6)])
+
+        p[i].append([500-25*2+rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
+        p[i].append([550-25*1+rm.uniform(-5, 6), 400+25*7+rm.uniform(-5, 6)])
+        p[i].append([550     +rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
+        p[i].append([550-25*1+rm.uniform(-5, 6), 400+25*8+rm.uniform(-5, 6)])
+        p[i].append([550+25  +rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
+        p[i].append([550+25*2+rm.uniform(-5, 6), 400+25*7+rm.uniform(-5, 6)])
+        p[i].append([550+25*2+rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
+        p[i].append([550+25*3+rm.uniform(-5, 6), 400+25*7+rm.uniform(-5, 6)])
+        p[i].append([550+25*4+rm.uniform(-5, 6), 400+25*5+rm.uniform(-5, 6)])
+        p[i].append([550+25*5+rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
+        p[i].append([550+25*4+rm.uniform(-5, 6), 400+25*4+rm.uniform(-5, 6)])
+        p[i].append([550+25*3+rm.uniform(-5, 6), 400+25*3+rm.uniform(-5, 6)])
+        p[i].append([550+25*4+rm.uniform(-5, 6), 400+25*3+rm.uniform(-5, 6)])
+        p[i].append([550+25, 400])
+        pol[i] = (polygon(p[i]))
+
+
+
     brushColor('#B2001D')
     penColor('#B2001D')
     ellipsis(25, 25, 550 - 10, 400 - 10)
@@ -43,8 +58,10 @@ def ghost():
     brushColor('#000000')
     penColor('#000000')
     c = rm.uniform(-1, 2)
-    ellipsis(15, 10, 550 - 10+c,  400 - 10 +c)
-    ellipsis(15, 10, 550 + 10 +c, 400 - 10 +c)
+    d = rm.uniform(-1, 2)
+    ellipsis(15, 10, 550 - 10+c,  400 - 10 +d)
+    ellipsis(15, 10, 550 + 10 +c, 400 - 10 +d)
+
 
 
 windowSize(700, 600)
@@ -113,38 +130,8 @@ brushColor('#333333')
 penColor('#333333')
 ellipsis(30000, 400, 700, 120)
 
-#Ghost
-brushColor('#E5E5E5')
-penColor('#E5E5E5')
-ellipsis(625, 625, 550, 400)
-p = ([])
-p.append([550-25  , 400])
-p.append([550-25*3, 400+25*3])
-p.append([550-25*4, 400+25*7])
-p.append([500-25*2, 400+25*6])
-p.append([550-25*1, 400+25*7])
-p.append([550     , 400+25*6])
-p.append([550-25*1, 400+25*8])
-p.append([550+25  , 400+25*6])
-p.append([550+25*2, 400+25*7])
-p.append([550+25*2, 400+25*6])
-p.append([550+25*3, 400+25*7])
-p.append([550+25*4, 400+25*5])
-p.append([550+25*5, 400+25*6])
-p.append([550+25*4, 400+25*4])
-p.append([550+25*3, 400+25*3])
-p.append([550+25, 400])
-polygon(p)
-brushColor('#B2001D')
-penColor('#B2001D')
-ellipsis(25, 25, 550 - 10, 400 - 10)
-ellipsis(25, 25, 550 + 10, 400 - 10)
-'''
-brushColor('#000000')
-penColor('#000000')
-ellipsis(15, 10, 550 - 10, 400 - 10)
-ellipsis(15, 10, 550 + 10, 400 - 10)
-'''
-onTimer(ghost, 1)
+
+onTimer(ghost, 200)
+
 
 run()
