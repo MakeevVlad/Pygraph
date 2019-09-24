@@ -31,7 +31,6 @@ def ghost():
         p[i].append([550-25*3+rm.uniform(-5, 6), 400+25*3+rm.uniform(-5, 6)])
         p[i].append([550-25*4+rm.uniform(-5, 6), 400+25*5+rm.uniform(-5, 6)])
         p[i].append([550-25*3+rm.uniform(-5, 6), 400+25*4+rm.uniform(-5, 6)])
-
         p[i].append([500-25*2+rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
         p[i].append([550-25*1+rm.uniform(-5, 6), 400+25*7+rm.uniform(-5, 6)])
         p[i].append([550     +rm.uniform(-5, 6), 400+25*6+rm.uniform(-5, 6)])
