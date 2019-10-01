@@ -73,7 +73,7 @@ def ghost():
     ellipsis(15, 10, 550 - 10+c,  400 - 10 +d)
     ellipsis(15, 10, 550 + 10 +c, 400 - 10 +d)
 
-per = 3
+per = 3 #phase counter
 def lightning():
     global lightning_obj, per
 
@@ -109,6 +109,33 @@ def lightning():
             changePenColor(object, content[object])
             changeFillColor(object, content[object])
 
+def house(x,y): #x,y=left bottom; default x=50,y=500
+    #hounted house
+    brushColor('#552200')
+    penColor('#552200')
+    content[rectangle(x, y, x+250, y-340)] = '#552200'
+    #roof
+    brushColor('#000000')
+    penColor('#000000')
+    content[polygon([[x-25, y-340], [x+25, y-370], [x+225,y-370],[x+275, y-340]])] = '#000000'
+    #columns
+    brushColor('#554433')
+    penColor('#554433')
+    for i in range(4):
+        content[rectangle(x+10 + i*65, y-200, x+40+ i*65, y-340)] = '#554433'
+    ##Bottom windws
+    brushColor('#554433')
+    penColor('#554433')
+    for i in range(2):
+        content[rectangle(x+20 + i*85, y-50, x+60+ i*85, y-100)] = '#554433'
+    brushColor('#FFCC33')
+    penColor('#FFCC33')
+    content[rectangle(x+20 + 2*85, y-50, x+60+ 2*85, y-100)] = '#FFCC33'
+    #Balcony
+    brushColor('#371700')
+    penColor('#371700')
+    content[rectangle(x-25, y-185, x+270, y-200)] = '#371700'
+
 
 content = dict()
 
@@ -127,37 +154,7 @@ brushColor('#000000')
 penColor('#000000')
 content[rectangle(0, 700, 700, 250)] = '#000000'
 
-#hounted house
-brushColor('#000000')
-penColor('#000000')
-content[polygon([[25, 160], [75, 130], [275, 130],[325, 160]])] = '#000000'
-
-brushColor('#552200')
-penColor('#552200')
-content[rectangle(50, 500, 300, 160)] = '#552200'
-
-#Top windws
-brushColor('#554433')
-penColor('#554433')
-for i in range(4):
-    content[rectangle(60 + i*65, 300, 90+ i*65, 160)] = '#554433'
-
-##Bottom windws
-brushColor('#554433')
-penColor('#554433')
-for i in range(2):
-    content[rectangle(70 + i*85, 450, 110+ i*85, 400)] = '#554433'
-brushColor('#FFCC33')
-penColor('#FFCC33')
-content[rectangle(70 + 2*85, 450, 110+ 2*85, 400)] = '#FFCC33'
-
-#Balcony
-brushColor('#110000')
-penColor('#110000')
-content[rectangle(25, 315, 320, 300)] = '#110000'
-
-
-
+house(50,500)
 
 #Sky
 ##moon
