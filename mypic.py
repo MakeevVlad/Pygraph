@@ -2,13 +2,15 @@ from graph import *
 import numpy as np
 import random as rm
 
-def ellipsis(a, b, x0, y0):
-    p = ([])
-    for x in np.arange(-np.sqrt(a) + x0, np.sqrt(a) + x0, 1):
-        p.append([x, np.sqrt(b*(1-(x-x0)**2/a))+y0])
-    for x in np.arange(np.sqrt(a) + x0, -np.sqrt(a) + x0, -1):
-        p.append([x, -np.sqrt(b*(1-(x-x0)**2/a))+y0])
-    return polygon(p)
+c = canvas()
+
+# def ellipsis(a, b, x0, y0):
+#     p = ([])
+#     for x in np.arange(-np.sqrt(a) + x0, np.sqrt(a) + x0, 1):
+#         p.append([x, np.sqrt(b*(1-(x-x0)**2/a))+y0])
+#     for x in np.arange(np.sqrt(a) + x0, -np.sqrt(a) + x0, -1):
+#         p.append([x, -np.sqrt(b*(1-(x-x0)**2/a))+y0])
+#     return polygon(p)
 
 pol = []
 global p
@@ -34,7 +36,8 @@ def ghost():
     '''
     brushColor('#E5E5E5')
     penColor('#E5E5E5')
-    ellipsis(625, 625, 550, 400)
+    #ellipsis(625, 625, 550, 400)
+    c.create_oval(525, 375, 525 + 51, 375 + 47, fill='#E5E5E5', outline='#E5E5E5')
     p = [([])]
     for i in range(5):
         p.append(([]))
@@ -61,46 +64,59 @@ def ghost():
 
 
 
-    brushColor('#B2001D')
-    penColor('#B2001D')
-    ellipsis(25, 25, 550 - 10, 400 - 10)
-    ellipsis(25, 25, 550 + 10, 400 - 10)
+    # brushColor('#B2001D')
+    # penColor('#B2001D')
+    # ellipsis(25, 25, 550 - 10, 400 - 10)
+    # ellipsis(25, 25, 550 + 10, 400 - 10)
+    c.create_oval(535, 385, 535 + 11, 385 + 11, fill='#B2001D', outline='#B2001D')
+    c.create_oval(555, 385, 555 + 11, 385 + 11, fill='#B2001D', outline='#B2001D')
 
     brushColor('#000000')
     penColor('#000000')
-    c = rm.uniform(-1, 2)
-    d = rm.uniform(-1, 2)
-    ellipsis(15, 10, 550 - 10+c,  400 - 10 +d)
-    ellipsis(15, 10, 550 + 10 +c, 400 - 10 +d)
+    cd = rm.uniform(-2, 2)
+    d = rm.uniform(-2, 2)
+    # ellipsis(15, 10, 550 - 10+cd,  400 - 10 +d)
+    # ellipsis(15, 10, 550 + 10 +cd, 400 - 10 +d)
+    c.create_oval(538 + cd, 389 + d, 538 + cd + 5, 389 + d + 5, fill='black', outline='black')
+    c.create_oval(558 + cd, 389 + d, 558 + cd + 5, 389 + d + 5, fill='black', outline='black')
+    polygon([(538 + cd, 389 + d), (539 + cd, 389 + d), (538 + cd - d, 460 + d),
+    (537 + d - cd, 550 + d), (536 + cd - d, 460 + d)])
+    polygon([(558 + cd, 389 + d), (559 + cd, 389 + d), (558 + cd - d, 460 + d),
+    (557 + cd - d, 550 + d), (556 + cd - d, 460 + d)])
 
-per = 3
+per = 4
 def lightning():
     global lightning_obj, per
 
-    per += 1
-    per %= 10
-
     if per == 0:
+        x = rm.choice(range(-60, 60))
+        sy = rm.choice(range(7, 15)) / 10
+
         points = list()
 
-        points.append((420, 0))
-        points.append((400, 75))
-        points.append((440, 75))
-        points.append((390, 225))
-        points.append((410, 96))
-        points.append((370, 96))
-        points.append((390, 0))
+        points.append((420 + x, 0 * sy))
+        points.append((400 + x, 75 * sy))
+        points.append((440 + x, 75 * sy))
+        points.append((390 + x, 225 * sy))
+        points.append((410 + x, 96 * sy))
+        points.append((370 + x, 96 * sy))
+        points.append((390 + x, 0 * sy))
 
         brushColor('white')
         penColor('white')
         lightning_obj = polygon(points)
+
+        per = 1
 
     elif per == 1:
         for object in content:
             changePenColor(object, invert_col(content[object]))
             changeFillColor(object, invert_col(content[object]))
 
+        per = 2
 
+    elif per == 2:
+        per = 3
 
     elif per == 3:
         deleteObject(lightning_obj)
@@ -109,6 +125,12 @@ def lightning():
             changePenColor(object, content[object])
             changeFillColor(object, content[object])
 
+        per = 4
+
+    elif rm.choice([False] * 10 + [True]):
+        per = 0
+
+
 
 content = dict()
 
@@ -116,7 +138,7 @@ windowSize(700, 600)
 canvasSize(700, 600)
 penColor('grey')
 brushColor('grey')
-ellipsis(10000, 1000, 600, 100)
+#ellipsis(10000, 1000, 600, 100)
 
 #background
 brushColor('#99999C')
@@ -161,22 +183,34 @@ content[rectangle(25, 315, 320, 300)] = '#110000'
 
 #Sky
 ##moon
-brushColor('#EEEEEE')
-penColor('#EEEEEE')
-content[ellipsis(4000, 4000, 600, 50)] = '#EEEEEE'
+# brushColor('#EEEEEE')
+# penColor('#EEEEEE')
+# content[ellipsis(4000, 4000, 600, 50)] = '#EEEEEE'
+content[c.create_oval(
+    537, -14, 537 + 127, -14 + 128, fill='#EEEEEE', outline='#EEEEEE')
+] = '#EEEEEE'
 
 ##clouds
-brushColor('#444444')
-penColor('#444444')
-content[ellipsis(30000, 550, 350, 80)] = '#444444'
+# brushColor('#444444')
+# penColor('#444444')
+# content[ellipsis(30000, 550, 350, 80)] = '#444444'
+content[c.create_oval(
+    176, 57, 176 + 348, 57 + 47, fill='#444444', outline='#444444')
+] = '#444444'
 
-brushColor('#888888')
-penColor('#888888')
-content[ellipsis(20000, 500, 510, 60)] = '#888888'
+# brushColor('#888888')
+# penColor('#888888')
+# content[ellipsis(20000, 500, 510, 60)] = '#888888'
+content[c.create_oval(
+    369, 38, 369 + 284, 38 + 45, fill='#888888', outline='#888888')
+] = '#888888'
 
-brushColor('#333333')
-penColor('#333333')
-content[ellipsis(30000, 400, 700, 120)] = '#333333'
+# brushColor('#333333')
+# penColor('#333333')
+# content[ellipsis(30000, 400, 700, 120)] = '#333333'
+content[c.create_oval(
+    527, 100, 527 + 354, 100 + 41, fill='#333333', outline='#333333')
+] = '#333333'
 
 
 onTimer(ghost, 200)
