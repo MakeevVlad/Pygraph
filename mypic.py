@@ -28,16 +28,27 @@ def invert_col(col):
 
     return res
 
+ghost_content = list()
 def ghost():
+    global ghost_content
+
     '''
     brushColor('#000000')
     penColor('#000000')
     rectangle(400, 600, 700, 400)
     '''
+
+    for obj in ghost_content:
+        deleteObject(obj)
+    ghost_content = list()
+
     brushColor('#E5E5E5')
     penColor('#E5E5E5')
     #ellipsis(625, 625, 550, 400)
-    c.create_oval(525, 375, 525 + 51, 375 + 47, fill='#E5E5E5', outline='#E5E5E5')
+    ghost_content.append(c.create_oval(
+        525, 375, 525 + 51, 375 + 47, fill='#E5E5E5', outline='#E5E5E5'
+    ))
+
     p = [([])]
     for i in range(5):
         p.append(([]))
@@ -68,8 +79,12 @@ def ghost():
     # penColor('#B2001D')
     # ellipsis(25, 25, 550 - 10, 400 - 10)
     # ellipsis(25, 25, 550 + 10, 400 - 10)
-    c.create_oval(535, 385, 535 + 11, 385 + 11, fill='#B2001D', outline='#B2001D')
-    c.create_oval(555, 385, 555 + 11, 385 + 11, fill='#B2001D', outline='#B2001D')
+    ghost_content.append(c.create_oval(
+        535, 385, 535 + 11, 385 + 11, fill='#B2001D', outline='#B2001D'
+    ))
+    ghost_content.append(c.create_oval(
+        555, 385, 555 + 11, 385 + 11, fill='#B2001D', outline='#B2001D'
+    ))
 
     brushColor('#000000')
     penColor('#000000')
@@ -77,16 +92,28 @@ def ghost():
     d = rm.uniform(-2, 2)
     # ellipsis(15, 10, 550 - 10+cd,  400 - 10 +d)
     # ellipsis(15, 10, 550 + 10 +cd, 400 - 10 +d)
-    c.create_oval(538 + cd, 389 + d, 538 + cd + 5, 389 + d + 5, fill='black', outline='black')
-    c.create_oval(558 + cd, 389 + d, 558 + cd + 5, 389 + d + 5, fill='black', outline='black')
-    polygon([(538 + cd, 389 + d), (539 + cd, 389 + d), (538 + cd - d, 460 + d),
-    (537 + d - cd, 550 + d), (536 + cd - d, 460 + d)])
-    polygon([(558 + cd, 389 + d), (559 + cd, 389 + d), (558 + cd - d, 460 + d),
-    (557 + cd - d, 550 + d), (556 + cd - d, 460 + d)])
+
+    ghost_content.append(c.create_oval(
+        538 + cd, 389 + d, 538 + cd + 5, 389 + d + 5,
+        fill='black', outline='black'
+    ))
+    ghost_content.append(c.create_oval(
+        558 + cd, 389 + d, 558 + cd + 5, 389 + d + 5,
+        fill='black', outline='black'
+    ))
+
+    ghost_content.append(polygon([
+        (538 + cd, 389 + d), (539 + cd, 389 + d), (538 + cd - d, 460 + d),
+        (537 + d - cd, 550 + d), (536 + cd - d, 460 + d)
+    ]))
+    ghost_content.append(polygon([
+        (558 + cd, 389 + d), (559 + cd, 389 + d), (558 + cd - d, 460 + d),
+        (557 + cd - d, 550 + d), (556 + cd - d, 460 + d)
+    ]))
 
 per = 4
 def lightning():
-    global lightning_obj, per
+    global lightning_obj, per, raining
 
     if per == 0:
         x = rm.choice(range(-60, 60))
@@ -127,15 +154,50 @@ def lightning():
 
         per = 4
 
+        raining = True
+
     elif rm.choice([False] * 10 + [True]):
         per = 0
 
+drops = dict()
+raining = False  # it will be raining after the first lightning, just make sense
+def rain():
+    global drops
 
+    if not raining:
+        return 0
+
+    col = '#222222'
+
+    x = rm.choice(range(width))
+    v = rm.choice(range(3)) + 1
+    new_drop = c.create_oval(x, -2 * v, x + 1.5 * v, 0, fill=col, outline=col)
+
+    drops[new_drop] = v
+
+    deleting_drops = set()
+
+    for drop in drops:
+        moveObjectBy(drop, 0, drops[drop] * 2)
+
+        x, y = xCoord(drop), yCoord(drop)
+        if y > height * (1 + 0.2 * (drops[drop] - 3)):
+            deleting_drops.add(drop)
+
+        if drops[drop] < 3 and y >= roof_y and house_x1 < x < house_x2:
+            deleting_drops.add(drop)
+
+    for drop in deleting_drops:
+        drops.pop(drop)
+        deleteObject(drop)
+
+
+width, height = 700, 600
 
 content = dict()
 
-windowSize(700, 600)
-canvasSize(700, 600)
+windowSize(width, height)
+canvasSize(width, height)
 penColor('grey')
 brushColor('grey')
 #ellipsis(10000, 1000, 600, 100)
@@ -150,13 +212,18 @@ penColor('#000000')
 content[rectangle(0, 700, 700, 250)] = '#000000'
 
 #hounted house
+roof_y = 130
 brushColor('#000000')
 penColor('#000000')
-content[polygon([[25, 160], [75, 130], [275, 130],[325, 160]])] = '#000000'
+content[polygon([
+    [25, 160], [75, roof_y], [275, roof_y],[325, 160]
+])] = '#000000'
 
+house_x1 = 50
+house_x2 = 300
 brushColor('#552200')
 penColor('#552200')
-content[rectangle(50, 500, 300, 160)] = '#552200'
+content[rectangle(house_x1, 500, house_x2, 160)] = '#552200'
 
 #Top windws
 brushColor('#554433')
@@ -215,5 +282,6 @@ content[c.create_oval(
 
 onTimer(ghost, 200)
 onTimer(lightning, 200)
+onTimer(rain, 13)
 
 run()
